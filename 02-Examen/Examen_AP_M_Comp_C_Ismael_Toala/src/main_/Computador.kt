@@ -1,11 +1,18 @@
-package kotlin.main
+package main_
+
 import java.io.Serializable
+import java.time.LocalDate
 
 data class Computador(
-    var id: Int,
+    val id: String,
     var nombre: String,
-    var fechaCompra: String, // Fecha
-    var precio: Double,      // Decimal
-    var tieneGarantia: Boolean, // Booleano
-    var componentes: MutableList<Componente> = mutableListOf() // Relación uno a muchos
-) : Serializable
+    var ram: Int,
+    var garantia: Boolean,
+    var fechaCompra: LocalDate,
+    var peso: Double,
+    val componentes: MutableList<Componente> = mutableListOf() // Agregada propiedad de componentes
+) : Serializable {
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
+}

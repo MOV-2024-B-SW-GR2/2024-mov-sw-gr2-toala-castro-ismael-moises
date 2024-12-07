@@ -1,11 +1,17 @@
-package kotlin.main
-
+package main_
 import java.io.Serializable
+import java.time.LocalDate
 
 data class Componente(
-    var id: Int,
+    val id: String,
     var nombre: String,
-    var tipo: String,   // String
-    var cantidad: Int,  // Entero
-    var precioUnitario: Double // Decimal
-) : Serializable
+    var precio: Double,
+    var stock: Int,
+    var enGarantia: Boolean,
+    var fechaFabricacion: LocalDate
+) : Serializable {
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
+}
+

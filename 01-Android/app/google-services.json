@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "25916235438",
+    "project_id": "mov-2024b-sw-gr2-imtc",
+    "storage_bucket": "mov-2024b-sw-gr2-imtc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25916235438:android:55624396476051ca16d73f",
+        "android_client_info": {
+          "package_name": "com.example.gr2sw2024b_imtc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6GN1fIGYQQOb5jzwXPIz-qCp7JpJ7MX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
