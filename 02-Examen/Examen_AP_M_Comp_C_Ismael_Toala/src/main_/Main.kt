@@ -11,7 +11,7 @@ fun main() {
         println("6. Listar Componentes de un Computador")
         println("7. Eliminar Componente de un Computador")
         println("8. Salir")
-        println("Escoja la opcion que este de acuerdo a su necesidad: ")
+        println("Escoja una opción: ")
         when (readlnOrNull()) {
             "1" -> ComputadorCRUD.crearComputador()
             "2" -> ComputadorCRUD.listarComputadores()
