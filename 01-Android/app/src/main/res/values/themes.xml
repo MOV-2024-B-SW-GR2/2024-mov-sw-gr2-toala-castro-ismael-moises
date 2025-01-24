@@ -1,9 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
+<<<<<<< HEAD
     <style name="Base.Theme.Gr2sw2024b_vaes" parent="Theme.Material3.DayNight.NoActionBar">
+=======
+    <style name="Base.Theme.Gr2sw2024b_imtc" parent="Theme.Material3.DayNight.NoActionBar">
+>>>>>>> 49a7cd828e305cf99e543a83a3ef1249f5294634
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+<<<<<<< HEAD
     <style name="Theme.Gr2sw2024b_vaes" parent="Base.Theme.Gr2sw2024b_vaes" />
+=======
+    <style name="Theme.Gr2sw2024b_imtc" parent="Base.Theme.Gr2sw2024b_imtc" />
+>>>>>>> 49a7cd828e305cf99e543a83a3ef1249f5294634
 </resources>

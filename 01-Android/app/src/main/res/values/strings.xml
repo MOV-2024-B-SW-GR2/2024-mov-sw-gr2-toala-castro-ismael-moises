@@ -1,4 +1,5 @@
 <resources>
+<<<<<<< HEAD
     <string name="app_name">gr2sw2024b_vaes</string>
     <string name="saludo">Hello Friends</string>
     <color name="saludo_color">#964B00</color>
@@ -7,4 +8,7 @@
         <item>Martes</item>
         <item>Miercoles</item>
     </string-array>
+=======
+    <string name="app_name">gr2sw2024b_imtc</string>
+>>>>>>> 49a7cd828e305cf99e543a83a3ef1249f5294634
 </resources>

@@ -10,6 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+<<<<<<< HEAD
         android:theme="@style/Theme.Gr2sw2024b_vaes"
         tools:targetApi="31">
         <activity
@@ -28,6 +29,11 @@
             android:name=".ACicloVida"
             android:exported="false" />
         <activity
+=======
+        android:theme="@style/Theme.Gr2sw2024b_imtc"
+        tools:targetApi="31">
+        <activity
+>>>>>>> 49a7cd828e305cf99e543a83a3ef1249f5294634
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

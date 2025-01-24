@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "gr2sw2024b_vaes"
+rootProject.name = "gr2sw2024b_imtc"
 include(":app")
