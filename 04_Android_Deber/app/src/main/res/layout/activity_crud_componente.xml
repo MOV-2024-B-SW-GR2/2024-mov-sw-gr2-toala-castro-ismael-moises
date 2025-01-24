@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_crud_componente"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CrudComponente">
+
+    <!-- EditText para el nombre del componente -->
+    <EditText
+        android:id="@+id/input_name_componente"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:hint="Nombre del componente"
+        android:inputType="text"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/input_precio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <!-- EditText para el precio -->
+    <EditText
+        android:id="@+id/input_precio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:hint="Precio"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/input_stock"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_name_componente" />
+
+    <!-- EditText para el stock -->
+    <EditText
+        android:id="@+id/input_stock"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:hint="Stock"
+        android:inputType="number"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/switch_en_garantia"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_precio" />
+
+    <!-- Switch para la garantía -->
+
+    <!-- EditText para la fecha de fabricación -->
+
+    <!-- Botón para guardar el componente -->
+
+    <Switch
+        android:id="@+id/switch_en_garantia"
+        android:layout_width="349dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="16dp"
+        android:text="En garantía"
+        app:layout_constraintBottom_toTopOf="@+id/input_fecha_fabricacion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- EditText para la fecha de fabricación -->
+    <EditText
+        android:id="@+id/input_fecha_fabricacion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:ems="10"
+        android:hint="Fecha de fabricación (YYYY-MM-DD)"
+        android:inputType="date"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_guardar_componente"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_stock" />  <!-- Asegura que se coloca debajo de input_stock -->
+
+
+    <Button
+        android:id="@+id/btn_guardar_componente"
+        android:layout_width="223dp"
+        android:layout_height="71dp"
+        android:text="Guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.547"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_fecha_fabricacion"
+        app:layout_constraintVertical_bias="0.275" /> <!-- Mover el botón más abajo -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

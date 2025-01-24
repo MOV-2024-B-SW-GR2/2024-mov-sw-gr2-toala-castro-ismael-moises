@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">04_Android_Deber</string>
+    <string name="ver_computadores">Ver Computadores</string>
+    <string name="hola_a_todos_app_hecha_por_ismael">Hola a todos, APP hecha por Ismael</string>
+</resources>

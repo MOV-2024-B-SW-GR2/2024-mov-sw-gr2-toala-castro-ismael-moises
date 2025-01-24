@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "777919532626",
+    "project_id": "android-deber-imtc",
+    "storage_bucket": "android-deber-imtc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777919532626:android:d61f4b0cad9b0d519e598b",
+        "android_client_info": {
+          "package_name": "com.example.a04_android_deber"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXn7ddlLs_JpdjtlgOCnA0HSwE4zyhumQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

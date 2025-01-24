@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_crud_computador"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CrudComponente">
+
+    <!-- Campo para Nombre -->
+    <EditText
+        android:id="@+id/input_nombre_computador"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ingrese Nombre"
+        android:inputType="text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:minHeight="48dp" /> <!-- Aseguramos una altura mínima -->
+
+    <!-- Campo para RAM -->
+    <EditText
+        android:id="@+id/input_ram_computador"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ingrese RAM (GB)"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/input_nombre_computador"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:minHeight="48dp" /> <!-- Aseguramos una altura mínima -->
+
+    <!-- Switch para Garantía -->
+    <Switch
+        android:id="@+id/switch_garantia_computador"
+        android:layout_width="201dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Garantía Activa"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_ram_computador" />
+
+    <!-- Campo para Fecha de Compra -->
+    <EditText
+        android:id="@+id/input_fecha_compra_computador"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ingrese Fecha (AAAA-MM-DD)"
+        android:inputType="date"
+        app:layout_constraintTop_toBottomOf="@id/switch_garantia_computador"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:minHeight="48dp" /> <!-- Aseguramos una altura mínima -->
+
+    <!-- Campo para Peso -->
+    <EditText
+        android:id="@+id/input_peso_computador"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ingrese Peso (kg)"
+        android:inputType="numberDecimal"
+        app:layout_constraintTop_toBottomOf="@id/input_fecha_compra_computador"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:minHeight="48dp" /> <!-- Aseguramos una altura mínima -->
+
+    <!-- Botón para Guardar o Actualizar -->
+    <Button
+        android:id="@+id/btn_guardar_computador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        app:layout_constraintTop_toBottomOf="@id/input_peso_computador"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
