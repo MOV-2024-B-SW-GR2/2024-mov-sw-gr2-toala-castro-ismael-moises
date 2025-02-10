@@ -5,81 +5,117 @@
     android:id="@+id/cl_crud_computador"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CrudComponente">
+    tools:context=".CrudComputador">
 
     <!-- Campo para Nombre -->
-    <EditText
-        android:id="@+id/input_nombre_computador"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Ingrese Nombre"
-        android:inputType="text"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:minHeight="48dp" /> <!-- Aseguramos una altura mínima -->
 
-    <!-- Campo para RAM -->
-    <EditText
-        android:id="@+id/input_ram_computador"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Ingrese RAM (GB)"
-        android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@id/input_nombre_computador"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"
-        android:minHeight="48dp" /> <!-- Aseguramos una altura mínima -->
-
-    <!-- Switch para Garantía -->
-    <Switch
-        android:id="@+id/switch_garantia_computador"
-        android:layout_width="201dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Garantía Activa"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_ram_computador" />
-
-    <!-- Campo para Fecha de Compra -->
-    <EditText
-        android:id="@+id/input_fecha_compra_computador"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Ingrese Fecha (AAAA-MM-DD)"
-        android:inputType="date"
-        app:layout_constraintTop_toBottomOf="@id/switch_garantia_computador"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"
-        android:minHeight="48dp" /> <!-- Aseguramos una altura mínima -->
-
-    <!-- Campo para Peso -->
-    <EditText
-        android:id="@+id/input_peso_computador"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Ingrese Peso (kg)"
-        android:inputType="numberDecimal"
-        app:layout_constraintTop_toBottomOf="@id/input_fecha_compra_computador"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"
-        android:minHeight="48dp" /> <!-- Aseguramos una altura mínima -->
-
-    <!-- Botón para Guardar o Actualizar -->
     <Button
         android:id="@+id/btn_guardar_computador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Guardar"
-        app:layout_constraintTop_toBottomOf="@id/input_peso_computador"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.762" />
+
+    <Switch
+        android:id="@+id/switch_en_garantia"
+        android:layout_width="192dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="168dp"
+        android:text="Tiene Garantia?"
+        app:layout_constraintBottom_toTopOf="@+id/btn_guardar_computador"
+        app:layout_constraintEnd_toEndOf="@+id/btn_guardar_computador"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="@+id/btn_guardar_computador"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <EditText
+        android:id="@+id/input_name_computador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:ems="10"
+        android:hint="Ingrese Marca"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/input_date"
+        app:layout_constraintEnd_toEndOf="@+id/input_date"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/input_date" />
+
+    <EditText
+        android:id="@+id/input_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:ems="10"
+        android:hint="2020-01-01"
+        android:inputType="date"
+        app:layout_constraintBottom_toTopOf="@+id/input_peso"
+        app:layout_constraintEnd_toEndOf="@+id/input_peso"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/input_peso" />
+
+    <EditText
+        android:id="@+id/input_ram_computador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="46dp"
+        android:ems="10"
+        android:hint="(RAM)"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/switch_en_garantia"
+        app:layout_constraintEnd_toEndOf="@+id/switch_en_garantia"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="@+id/switch_en_garantia" />
+
+    <EditText
+        android:id="@+id/input_peso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="(peso)"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/switch_en_garantia"
+        app:layout_constraintEnd_toEndOf="@+id/switch_en_garantia"
+        app:layout_constraintHorizontal_bias="0.388"
+        app:layout_constraintStart_toStartOf="@+id/switch_en_garantia" />
+
+    <EditText
+        android:id="@+id/txt_latitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="108dp"
+        android:ems="10"
+        android:hint="Latitude"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/btn_guardar_computador"
+        app:layout_constraintEnd_toEndOf="@+id/btn_guardar_computador"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="@+id/btn_guardar_computador" />
+
+    <EditText
+        android:id="@+id/txt_longitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:ems="10"
+        android:hint="Longitude"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/btn_guardar_computador"
+        app:layout_constraintEnd_toEndOf="@+id/btn_guardar_computador"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/btn_guardar_computador" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

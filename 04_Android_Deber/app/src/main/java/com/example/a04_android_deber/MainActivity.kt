@@ -1,6 +1,5 @@
 package com.example.a04_android_deber
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -9,8 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class MainActivity : AppCompatActivity(){
-    @SuppressLint("MissingInflatedId")
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -22,7 +20,7 @@ class MainActivity : AppCompatActivity(){
         }
 
         // Inicializar BDD
-        BaseDeDatos.tablaComputador = SqliteHelper(this)
+        BaseDeDatos.tablaComputadorComponente = SqliteHelper(this)
 
         val botonListView = findViewById<Button>(R.id.btn_ver_list_computadores)
         botonListView

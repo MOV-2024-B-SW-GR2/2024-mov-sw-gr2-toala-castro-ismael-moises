@@ -1,7 +1,7 @@
 package com.example.a04_android_deber
 
+import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.ContextMenu
 import android.view.MenuItem
@@ -11,22 +11,17 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.gr2sw_deber_ksgt.CrudComputador
 import com.google.android.material.snackbar.Snackbar
 
-
-@Suppress("DEPRECATION")
-class CPListView : AppCompatActivity() {
+class CPListView: AppCompatActivity() {
     private lateinit var listView: ListView
     private lateinit var adapter: ArrayAdapter<String>
-    private val listaComputadores = mutableListOf<Computador>()
+    private val listaComputador = mutableListOf<Computador>()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -40,7 +35,7 @@ class CPListView : AppCompatActivity() {
         listView = findViewById(R.id.lvl_view_computador)
         val botonAnadirListView = findViewById<Button>(R.id.btn_crear_computador)
 
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listaComputadores.map { it.nombre })
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listaComputador.map { it.name })
         listView.adapter = adapter
 
         registerForContextMenu(listView)
@@ -50,23 +45,26 @@ class CPListView : AppCompatActivity() {
         botonAnadirListView.setOnClickListener {
             irActividad(CrudComputador::class.java) // Pasa el requestCode 1
         }
+
+
     }
 
-    private var posicionItemSeleccionado = -1 // VARIABLE GLOBAL
+    var posicionItemSeleccionado = -1 // VARIABLE GLOBAL
     override fun onCreateContextMenu(
         menu: ContextMenu?,
         v: View?,
         menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
+    ){
         super.onCreateContextMenu(menu, v, menuInfo)
+        // llenamos opciones del menu
         val inflater = menuInflater
         inflater.inflate(R.menu.menu, menu)
+        // obtener id
         val info = menuInfo as AdapterView.AdapterContextMenuInfo
-        posicionItemSeleccionado = info.position
+        val posicion = info.position
+        posicionItemSeleccionado = posicion
     }
 
-    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == RESULT_OK) {
@@ -74,23 +72,32 @@ class CPListView : AppCompatActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onContextItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.mi_editar -> {
-                val computadorSeleccionado = listaComputadores[posicionItemSeleccionado]
+                val computadorSeleccionado = listaComputador[posicionItemSeleccionado]
                 irActividad(CrudComputador::class.java, computadorSeleccionado)
-                true
+                return true
             }
             R.id.mi_eliminar -> {
                 abrirDialogo()
-                true
+                return true
+            }
+            R.id.mis_componentes -> {
+                val computadorSeleccionado = listaComputador[posicionItemSeleccionado]
+                irActividad(COListView::class.java, computadorSeleccionado)
+                return true
+            }
+            R.id.route_mapa -> {
+                val computadorSeleccionado = listaComputador[posicionItemSeleccionado]
+                irActividad(GgoogleMaps::class.java, computadorSeleccionado)
+                return true
             }
             else -> super.onContextItemSelected(item)
         }
     }
 
-    private fun mostrarSnackbar(texto: String) {
+    fun mostrarSnackbar(texto: String){
         val snack = Snackbar.make(
             findViewById(R.id.cl_list_computador),
             texto,
@@ -100,40 +107,46 @@ class CPListView : AppCompatActivity() {
         snack.show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun abrirDialogo() {
+    fun abrirDialogo(){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Desea Eliminar")
-        builder.setPositiveButton("Aceptar") { dialog, which ->
-            val computadorSeleccionado = listaComputadores[posicionItemSeleccionado]
-            val id = computadorSeleccionado.id
+        builder.setPositiveButton(
+            "Aceptar",
+            DialogInterface.OnClickListener{ dialog, which ->
+                val computadorSeleccionado = listaComputador[posicionItemSeleccionado]
+                val id = computadorSeleccionado.id
 
-            val eliminado = BaseDeDatos.tablaComputador?.eliminarComputador(id)
-            if (eliminado == true) {
-                mostrarSnackbar("Computador eliminado correctamente.")
-                cargarDatosDesdeBaseDeDatos() // Refrescar la lista
-            } else {
-                mostrarSnackbar("Error al eliminar el computador.")
+                // Llamar al método de eliminación
+                val eliminado = BaseDeDatos.tablaComputadorComponente?.eliminarComputador(id)
+                if (eliminado == true) {
+                    mostrarSnackbar("Computador eliminado correctamente.")
+                    cargarDatosDesdeBaseDeDatos() // Refrescar la lista
+                } else {
+                    mostrarSnackbar("Error al eliminar el computador.")
+                }
             }
-        }
-        builder.setNegativeButton("Cancelar", null)
+        )
+        builder.setNegativeButton(
+            "Cancelar",
+            null
+        )
         val dialogo = builder.create()
         dialogo.show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun cargarDatosDesdeBaseDeDatos() {
-        val computadores = BaseDeDatos.tablaComputador?.obtenerTodosLosComputadores()
-        listaComputadores.clear()
-        if (computadores != null) {
-            listaComputadores.addAll(computadores)
+        val computador = BaseDeDatos.tablaComputadorComponente?.obtenerTodosLosComputadores()
+        listaComputador.clear()
+        if (computador != null) {
+            listaComputador.addAll(computador)
+
         }
         adapter.clear()
-        adapter.addAll(listaComputadores.map { it.nombre })
+        adapter.addAll(listaComputador.map { it.name })
         adapter.notifyDataSetChanged()
     }
 
-    private fun irActividad(clase: Class<*>, computador: Computador? = null) {
+    fun irActividad(clase: Class<*>, computador: Computador? = null) {
         val intentExplicito = Intent(this, clase)
         if (computador != null) {
             intentExplicito.putExtra("modo", "editar")

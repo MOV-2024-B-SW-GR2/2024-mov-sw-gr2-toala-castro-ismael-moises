@@ -1,25 +1,19 @@
-package com.example.gr2sw_deber_ksgt
-
+package com.example.a04_android_deber
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.a04_android_deber.Computador
-import com.example.a04_android_deber.R
-import com.example.a04_android_deber.BaseDeDatos
 import com.google.android.material.snackbar.Snackbar
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
 
 class CrudComputador : AppCompatActivity() {
-    fun mostrarSnackbar(texto: String) {
+    fun mostrarSnackbar(texto: String){
         val snack = Snackbar.make(
             findViewById(R.id.cl_crud_computador),
             texto,
@@ -29,8 +23,7 @@ class CrudComputador : AppCompatActivity() {
         snack.show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    @SuppressLint("MissingInflatedId", "UseSwitchCompatOrMaterialCode")
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -43,21 +36,24 @@ class CrudComputador : AppCompatActivity() {
 
         val modo = intent.getStringExtra("modo") ?: "crear"
         val computador: Computador? = intent.getParcelableExtra("computador")
-
         val botonGuardarComputadorBDD = findViewById<Button>(R.id.btn_guardar_computador)
-        val inputNombre = findViewById<EditText>(R.id.input_nombre_computador)
+        val inputNombre = findViewById<EditText>(R.id.input_name_computador)
         val inputRam = findViewById<EditText>(R.id.input_ram_computador)
-        val switchGarantia = findViewById<Switch>(R.id.switch_garantia_computador)
-        val inputFechaCompra = findViewById<EditText>(R.id.input_fecha_compra_computador)
-        val inputPeso = findViewById<EditText>(R.id.input_peso_computador)
+        val switchActivo = findViewById<Switch>(R.id.switch_en_garantia)
+        val inputFecha = findViewById<EditText>(R.id.input_date)
+        val inputPeso = findViewById<EditText>(R.id.input_peso)
+        val inputLatitude = findViewById<EditText>(R.id.txt_latitude)
+        val inputLongitude = findViewById<EditText>(R.id.txt_longitude)
 
         if (modo == "editar" && computador != null) {
-            // Configurar campos con los datos del computador
-            inputNombre.setText(computador.nombre)
-            inputRam.setText(computador.ram.toString())
-            switchGarantia.isChecked = computador.garantia
-            inputFechaCompra.setText(computador.fechaCompra.toString())
+            // Configurar campos con los datos del superhéroe
+            inputNombre.setText(computador.name)
+            switchActivo.isChecked = computador.garantia
+            inputRam.setText(computador.ram)
+            inputFecha.setText(computador.debutCompra.toString())
             inputPeso.setText(computador.peso.toString())
+            inputLatitude.setText(computador.latitude.toString())
+            inputLongitude.setText(computador.longitude.toString())
             botonGuardarComputadorBDD.text = "Actualizar"
         } else {
             botonGuardarComputadorBDD.text = "Crear"
@@ -65,46 +61,56 @@ class CrudComputador : AppCompatActivity() {
 
         botonGuardarComputadorBDD.setOnClickListener {
             val nombre = inputNombre.text.toString().trim()
+            val garantia = switchActivo.isChecked
             val ramString = inputRam.text.toString().trim()
-            val garantia = switchGarantia.isChecked
-            val fechaCompraString = inputFechaCompra.text.toString().trim()
+            val debutDateString = inputFecha.text.toString().trim()
             val pesoString = inputPeso.text.toString().trim()
+            val latitudeString = inputLatitude.text.toString().trim()
+            val longitudeString = inputLongitude.text.toString().trim()
 
             // Validar entradas
-            if (nombre.isEmpty() || ramString.isEmpty() || fechaCompraString.isEmpty() || pesoString.isEmpty()) {
+            if (nombre.isEmpty() || debutDateString.isEmpty() || pesoString.isEmpty()) {
                 mostrarSnackbar("Por favor, completa todos los campos.")
                 return@setOnClickListener
             }
 
-            // Validar RAM
-            val ram = ramString.toIntOrNull()
-            if (ram == null || ram <= 0) {
-                mostrarSnackbar("Por favor, ingresa un valor válido para la RAM.")
-                return@setOnClickListener
-            }
-
-            // Validar fecha de compra
-            val fechaCompra: LocalDate = try {
-                LocalDate.parse(fechaCompraString)
+            // Convertir fecha a LocalDate
+            val debutCompra: LocalDate = try {
+                LocalDate.parse(debutDateString)
             } catch (e: DateTimeParseException) {
                 mostrarSnackbar("Por favor, ingresa una fecha válida en el formato AAAA-MM-DD.")
                 return@setOnClickListener
             }
 
-            // Validar peso
+            // Intentar convertir RAM a número
+            val ram = ramString.toIntOrNull()
+            if (ram == null || ram < 0) {
+                mostrarSnackbar("Por favor, ingresa un valor válido para la RAM.")
+                return@setOnClickListener
+            }
+
+            // Intentar convertir peso a número
             val peso = pesoString.toDoubleOrNull()
-            if (peso == null || peso <= 0) {
+            val latitude = latitudeString.toDoubleOrNull()
+            val longitude = longitudeString.toDoubleOrNull()
+            if (peso == null || peso < 0) {
                 mostrarSnackbar("Por favor, ingresa un valor válido para el peso.")
+                return@setOnClickListener
+            }
+            if(latitude == null || longitude == null){
+                mostrarSnackbar("Por favor, ingresa valores válidos para la latitud y longitud.")
                 return@setOnClickListener
             }
 
             if (modo == "crear") {
-                val respuesta = BaseDeDatos.tablaComputador?.crearComputador(
+                val respuesta = BaseDeDatos.tablaComputadorComponente?.crearComputador(
                     nombre,
-                    ram,
                     garantia,
-                    fechaCompra,
-                    peso
+                    ram,
+                    debutCompra,
+                    peso,
+                    latitude,
+                    longitude
                 )
 
                 if (respuesta == true) {
@@ -112,16 +118,18 @@ class CrudComputador : AppCompatActivity() {
                     setResult(RESULT_OK)
                     finish()
                 } else {
-                    mostrarSnackbar("Error al crear el computador.")
+                    mostrarSnackbar("Error al crear el Computador.")
                 }
             } else if (modo == "editar" && computador != null) {
-                val respuesta = BaseDeDatos.tablaComputador?.actualizarComputador(
-                    computador.id,
+                val respuesta = BaseDeDatos.tablaComputadorComponente?.actualizarComputador(
                     nombre,
-                    ram,
                     garantia,
-                    fechaCompra,
-                    peso
+                    ram,
+                    debutCompra,
+                    peso,
+                    computador.id,
+                    latitude,
+                    longitude,
                 )
 
                 if (respuesta == true) {

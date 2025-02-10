@@ -1,38 +1,34 @@
 package com.example.a04_android_deber
 
-import android.os.Build
-import android.os.Parcel
+
 import android.os.Parcelable
-import androidx.annotation.RequiresApi
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class Componente(
-    val id: String,
-    var nombre: String,
-    var precio: Double,
-    var stock: Int,
-    var enGarantia: Boolean,
-    var fechaFabricacion: LocalDate
-) : Parcelable {
-    @RequiresApi(Build.VERSION_CODES.O)
-    constructor(parcel: Parcel) : this(
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readDouble(),
+    val id: Int,
+    val name: String,
+    val description: String,
+    val garantiaCo: Boolean,
+    val precio: Double
+): Parcelable {
+    constructor(parcel: android.os.Parcel) : this(
         parcel.readInt(),
+        parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readByte() != 0.toByte(),
-        LocalDate.parse(parcel.readString(), DateTimeFormatter.ISO_DATE)
-    )
+        parcel.readDouble()
+    ) {
+    }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
-        parcel.writeString(nombre)
+    override fun toString(): String {
+        return name
+    }
+
+    override fun writeToParcel(parcel: android.os.Parcel, flags: Int) {
+        parcel.writeInt(id)
+        parcel.writeString(name)
+        parcel.writeString(description)
+        parcel.writeByte(if (garantiaCo) 1 else 0)
         parcel.writeDouble(precio)
-        parcel.writeInt(stock)
-        parcel.writeByte(if (enGarantia) 1 else 0)
-        parcel.writeString(fechaFabricacion.format(DateTimeFormatter.ISO_DATE))
     }
 
     override fun describeContents(): Int {
@@ -40,17 +36,12 @@ class Componente(
     }
 
     companion object CREATOR : Parcelable.Creator<Componente> {
-        @RequiresApi(Build.VERSION_CODES.O)
-        override fun createFromParcel(parcel: Parcel): Componente {
+        override fun createFromParcel(parcel: android.os.Parcel): Componente {
             return Componente(parcel)
         }
 
         override fun newArray(size: Int): Array<Componente?> {
             return arrayOfNulls(size)
         }
-    }
-
-    override fun toString(): String {
-        return "Componente(id='$id', nombre='$nombre', precio=$precio, stock=$stock, enGarantia=$enGarantia, fechaFabricacion=$fechaFabricacion)"
     }
 }

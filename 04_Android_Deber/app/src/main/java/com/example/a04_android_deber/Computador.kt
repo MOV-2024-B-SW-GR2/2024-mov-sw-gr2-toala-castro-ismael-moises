@@ -2,46 +2,49 @@ package com.example.a04_android_deber
 import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.annotation.RequiresApi
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-@Suppress("DEPRECATION")
-class Computador(
-    val id: String,
-    var nombre: String,
-    var ram: Int,
-    var garantia: Boolean,
-    var fechaCompra: LocalDate,
-    var peso: Double,
-    private val componentes: MutableList<Componente> = mutableListOf()
-) : Parcelable {
-    @RequiresApi(Build.VERSION_CODES.O)
+class Computador (
+    val id: Int,
+    val name: String,
+    val ram: Int,
+    val garantia: Boolean,
+    val debutCompra: LocalDate,
+    val peso: Double,
+    val latitude: Double,
+    val longitude: Double
+): Parcelable {
+    val latitud: Double
+        get() = latitude
+    val longitud: Double
+        get() = longitude
+
     constructor(parcel: Parcel) : this(
-        parcel.readString()!!,
+        parcel.readInt(),
         parcel.readString()!!,
         parcel.readInt(),
         parcel.readByte() != 0.toByte(),
         LocalDate.parse(parcel.readString(), DateTimeFormatter.ISO_DATE),
         parcel.readDouble(),
-        mutableListOf<Componente>().apply {
-            parcel.readList(this, Componente::class.java.classLoader)
-        }
-    )
-
-    override fun toString(): String {
-        return nombre
+        parcel.readDouble(),
+        parcel.readDouble()
+    ) {
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    override fun toString(): String {
+        return name
+    }
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
-        parcel.writeString(nombre)
+        parcel.writeInt(id)
+        parcel.writeString(name)
         parcel.writeInt(ram)
         parcel.writeByte(if (garantia) 1 else 0)
-        parcel.writeString(fechaCompra.format(DateTimeFormatter.ISO_DATE))
+        parcel.writeString(debutCompra.format(DateTimeFormatter.ISO_DATE))
         parcel.writeDouble(peso)
-        parcel.writeList(componentes)
+        parcel.writeDouble(latitude)
+        parcel.writeDouble(longitude)
     }
 
     override fun describeContents(): Int {
@@ -49,7 +52,7 @@ class Computador(
     }
 
     companion object CREATOR : Parcelable.Creator<Computador> {
-        @RequiresApi(Build.VERSION_CODES.O)
+
         override fun createFromParcel(parcel: Parcel): Computador {
             return Computador(parcel)
         }

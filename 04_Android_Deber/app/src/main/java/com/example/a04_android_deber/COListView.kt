@@ -1,8 +1,8 @@
 package com.example.a04_android_deber
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.ContextMenu
 import android.view.View
@@ -12,7 +12,6 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,15 +19,13 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
 import java.util.Locale
 
-@Suppress("DEPRECATION")
-class COListView: AppCompatActivity() {
+class COListView : AppCompatActivity() {
     private lateinit var listView: ListView
     private lateinit var adapter: ArrayAdapter<String>
     private val listaComponente = mutableListOf<Componente>()
-    private var idComputador = ""
+    private var idComputador = -1
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    @SuppressLint("MissingInflatedId", "SetTextI18n")
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -40,27 +37,27 @@ class COListView: AppCompatActivity() {
         }
 
         listView = findViewById(R.id.lvl_view_componente)
-        val txtPower = findViewById<TextView>(R.id.txt_view_componente)
-        val btnAnadirPower = findViewById<Button>(R.id.btn_crear_componente)
+        val txtcomponente = findViewById<TextView>(R.id.txt_view_componente)
+        val btnAnadirComponente = findViewById<Button>(R.id.btn_crear_componente)
 
         adapter =
-            ArrayAdapter(this, android.R.layout.simple_list_item_1, listaComponente.map { it.nombre })
+            ArrayAdapter(this, android.R.layout.simple_list_item_1, listaComponente.map { it.name })
         listView.adapter = adapter
 
         val computador = intent.getParcelableExtra<Computador>("computador")
         if (computador != null) {
             idComputador = computador.id
         }
-        txtPower.text = "${computador?.nombre?.toUpperCase(Locale.ROOT)}'S Componentes"
+        txtcomponente.setText("${computador?.name?.toUpperCase(Locale.ROOT)}'S COMPONENTES")
         registerForContextMenu(listView)
         cargarDatosDesdeBaseDeDatos(idComputador)
 
-        btnAnadirPower.setOnClickListener {
+        btnAnadirComponente.setOnClickListener {
             irActividad(CrudComponente::class.java)
         }
     }
 
-    private var posicionItemSeleccionado = -1 // VARIABLE GLOBAL
+    var posicionItemSeleccionado = -1 // VARIABLE GLOBAL
     override fun onCreateContextMenu(
         menu: ContextMenu?,
         v: View?,
@@ -71,13 +68,12 @@ class COListView: AppCompatActivity() {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu, menu)
         menu?.findItem(R.id.mis_componentes)?.isVisible = false
+        menu?.findItem(R.id.route_mapa)?.isVisible = false
         val info = menuInfo as AdapterView.AdapterContextMenuInfo
         val posicion = info.position
         posicionItemSeleccionado = posicion
     }
 
-    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == RESULT_OK) {
@@ -85,12 +81,11 @@ class COListView: AppCompatActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onContextItemSelected(item: android.view.MenuItem): Boolean {
         return when (item.itemId) {
             R.id.mi_editar -> {
-                val powerSeleccionado = listaComponente[posicionItemSeleccionado]
-                irActividad(CrudComponente::class.java, powerSeleccionado)
+                val componenteSeleccionado = listaComponente[posicionItemSeleccionado]
+                irActividad(CrudComponente::class.java, componenteSeleccionado)
                 return true
             }
 
@@ -99,7 +94,7 @@ class COListView: AppCompatActivity() {
                 return true
             }
 
-            R.id.mis_componentes -> {
+            R.id.mis_componentes-> {
                 return true
             }
 
@@ -107,7 +102,7 @@ class COListView: AppCompatActivity() {
         }
     }
 
-    private fun mostrarSnackbar(texto: String) {
+    fun mostrarSnackbar(texto: String) {
         val snack = Snackbar.make(
             findViewById(R.id.cl_list_componente),
             texto,
@@ -117,48 +112,48 @@ class COListView: AppCompatActivity() {
         snack.show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun abrirDialogo() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("¿Desea eliminar este componente?")
+        builder.setTitle("Desea Eliminar")
         builder.setPositiveButton(
-            "Aceptar"
-        ) { _, _ -> // Eliminar el componente seleccionado
-            val componenteSeleccionado = listaComponente[posicionItemSeleccionado]
-            val id = componenteSeleccionado.id
+            "Aceptar",
+            DialogInterface.OnClickListener{ dialog, which ->
+                val componenteSeleccionado = listaComponente[posicionItemSeleccionado]
+                val id = componenteSeleccionado.id
 
-            // Llamar al método de eliminación de la base de datos
-            val eliminado = BaseDeDatos.tablaComponente?.eliminarComponente(id)
-            if (eliminado == true) {
-                mostrarSnackbar("Componente eliminado correctamente.")
-                cargarDatosDesdeBaseDeDatos(idComputador) // Refrescar la lista de componentes
-            } else {
-                mostrarSnackbar("Error al eliminar el componente.")
+                // Llamar al método de eliminación
+                val eliminado = BaseDeDatos.tablaComputadorComponente?.eliminarComponente(id)
+                if (eliminado == true) {
+                    mostrarSnackbar("Componente eliminado correctamente.")
+                    cargarDatosDesdeBaseDeDatos(idComputador) // Refrescar la lista
+                } else {
+                    mostrarSnackbar("Error al eliminar el componente.")
+                }
             }
-        }
-        builder.setNegativeButton("Cancelar", null)
+        )
+        builder.setNegativeButton(
+            "Cancelar",
+            null
+        )
         val dialogo = builder.create()
         dialogo.show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun cargarDatosDesdeBaseDeDatos(idComputador: String) {
-        // Obtener los componentes asociados al computador desde la base de datos
-        val componentes = BaseDeDatos.tablaComponente?.obtenerComponentesPorComputador(idComputador)
+    fun cargarDatosDesdeBaseDeDatos(idComputador: Int) {
+        val componentes = BaseDeDatos.tablaComputadorComponente?.obtenerComponentesPorComputador(idComputador)
         listaComponente.clear()
         if (componentes != null) {
             listaComponente.addAll(componentes)
+
         }
-        // Actualizar el adaptador con los nombres de los componentes
         adapter.clear()
-        adapter.addAll(listaComponente.map { it.nombre })
+        adapter.addAll(listaComponente.map { it.name })
         adapter.notifyDataSetChanged()
     }
 
-
-    private fun irActividad(clase: Class<*>, componente: Componente? = null) {
+    fun irActividad(clase: Class<*>, componente: Componente? = null) {
         val intentExplicito = Intent(this, clase)
-        intentExplicito.putExtra("idSuperhero", idComputador)
+        intentExplicito.putExtra("idComputador", idComputador)
 
         if (componente != null) {
             intentExplicito.putExtra("modo", "editar")

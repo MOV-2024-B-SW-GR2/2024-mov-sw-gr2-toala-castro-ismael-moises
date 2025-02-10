@@ -11,4 +11,8 @@
     <item
         android:id="@+id/mis_componentes"
         android:title="Ver componente" />
+    <item
+        android:id="@+id/route_mapa"
+        android:title="Ver mapa" />
+
 </menu>
