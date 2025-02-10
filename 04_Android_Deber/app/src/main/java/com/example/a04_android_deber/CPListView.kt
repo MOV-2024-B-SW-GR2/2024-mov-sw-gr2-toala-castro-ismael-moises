@@ -21,7 +21,7 @@ class CPListView: AppCompatActivity() {
     private lateinit var listView: ListView
     private lateinit var adapter: ArrayAdapter<String>
     private val listaComputador = mutableListOf<Computador>()
-
+    //Computador
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

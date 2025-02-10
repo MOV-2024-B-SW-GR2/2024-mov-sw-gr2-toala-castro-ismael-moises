@@ -24,7 +24,7 @@ class COListView : AppCompatActivity() {
     private lateinit var adapter: ArrayAdapter<String>
     private val listaComponente = mutableListOf<Componente>()
     private var idComputador = -1
-
+    //Componente
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

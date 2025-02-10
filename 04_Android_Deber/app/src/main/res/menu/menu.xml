@@ -10,7 +10,7 @@
         android:title="Eliminar" />
     <item
         android:id="@+id/mis_componentes"
-        android:title="Ver componente" />
+        android:title="Ver componentes" />
     <item
         android:id="@+id/route_mapa"
         android:title="Ver mapa" />
