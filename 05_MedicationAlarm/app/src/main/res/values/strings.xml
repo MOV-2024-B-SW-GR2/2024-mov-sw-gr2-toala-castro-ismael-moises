@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">05_MedicationAlarm</string>
+    <string name="ver_computadores">Ver Computadores</string>
+    <string name="Medicaction">Medication</string>
+</resources>
